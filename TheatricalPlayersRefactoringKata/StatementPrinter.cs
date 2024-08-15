@@ -20,10 +20,10 @@ public class StatementPrinter
             volumeCredits += CalculateVolumeCredits(play, perf.Audience);
 
             // print line for this order
-            result += String.Format(cultureInfo, "  {0}: {1:C} ({2} seats)\n", play.Name, Convert.ToDecimal(thisAmount / 100), perf.Audience);
+            result += String.Format(cultureInfo, "  {0}: {1:C} ({2} seats)\n", play.Name, thisAmount, perf.Audience);
             totalAmount = totalAmount + thisAmount;
         }
-        result += String.Format(cultureInfo, "Amount owed is {0:C}\n", Convert.ToDecimal(totalAmount / 100));
+        result += String.Format(cultureInfo, "Amount owed is {0:C}\n", totalAmount);
         result += String.Format("You earned {0} credits\n", volumeCredits);
         return result;
     }
@@ -33,22 +33,23 @@ public class StatementPrinter
         var lines = play.Lines;
         if(lines < 1000) lines = 1000;
         if(lines > 4000) lines = 4000;
-        var thisAmount = lines / 10m; //Base value
+        //Base value
+        var thisAmount = (decimal)lines / 10;
 
         switch (play.Type)
         {
             case "tragedy":
                 if (audience > 30)
                 {
-                    thisAmount += 10m * (audience - 30m);
+                    thisAmount += (10 * (audience - 30));
                 }
                 break;
             case "comedy":
                 if (audience > 20)
                 {
-                    thisAmount += 100m + (5m * (audience - 20m));
+                    thisAmount += 100 + (5 * (audience - 20));
                 }
-                thisAmount += 3m * audience;
+                thisAmount += 3 * audience;
                 break;
             case "history":
                 // Call the CalculateAmount function again with the current play's data, using the pricing logic for tragedy and comedy, summing the values to form the final price
@@ -70,7 +71,9 @@ public class StatementPrinter
                 credits += (int)Math.Floor((decimal)audience/5);
                 break;
             case "tragedy":
+                break;
             case "history":
+                break;
             default:
                 throw new Exception("Unknow play type: " + play.Type);
         }
