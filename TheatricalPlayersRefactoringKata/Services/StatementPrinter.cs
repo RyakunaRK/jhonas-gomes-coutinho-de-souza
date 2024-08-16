@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -86,7 +88,7 @@ public class StatementPrinter
         return credits;
     }
 
-    public XDocument PrintXml(Invoice invoice, Dictionary<string, Play> plays)
+    public string PrintXml(Invoice invoice, Dictionary<string, Play> plays)
     {
         var totalAmount = 0m;
         var volumeCredits = 0;
@@ -117,8 +119,14 @@ public class StatementPrinter
             statementElement.Add(itemsElement);
             statementElement.Add(new XElement("AmountOwed", totalAmount));
             statementElement.Add(new XElement("EarnedCredits", volumeCredits));
+            XDocument xmlArchive = new XDocument(new XDeclaration("1.0","utf-8","yes") , statementElement);
+            
 
-            return new XDocument(new XDeclaration("1.0", "utf-8", "yes"), statementElement);
+            // xmlArchive.Save(@"C:\Users\jonas\OneDrive\Área de Trabalho\C#\teste.xml");
+            // Console.WriteLine(File.ReadAllText("teste.xml"));
+            
+
+            return xmlArchive.ToString();
     }
 
 }

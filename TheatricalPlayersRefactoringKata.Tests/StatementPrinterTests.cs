@@ -94,15 +94,9 @@ public class StatementPrinterTests
         );
 
         StatementPrinter statementPrinter = new StatementPrinter();
-        var xmlResult = statementPrinter.PrintXml(invoice, plays);
-
-        using (var writer = new StringWriter())
-        {
-            xmlResult.Save(writer, SaveOptions.None);
-            Approvals.VerifyXml(writer.ToString());
-        }
+        string xmlResult = statementPrinter.PrintXml(invoice, plays);
 
 
-        Approvals.VerifyXml(xmlResult.ToString());
+        Approvals.VerifyXml(xmlResult);
     }
 }
