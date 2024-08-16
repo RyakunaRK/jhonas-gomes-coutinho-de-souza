@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using Microsoft.VisualBasic;
-using TheatricalPlayersRefactoringKata.Domain.Entities;
+using TheatricalPlayersRefactoringKata.Domain;
 
 namespace TheatricalPlayersRefactoringKata.Services;
 

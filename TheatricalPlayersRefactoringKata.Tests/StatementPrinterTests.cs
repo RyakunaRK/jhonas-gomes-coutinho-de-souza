@@ -5,7 +5,7 @@ using ApprovalTests;
 using System.Xml.Linq;
 using ApprovalTests.Reporters;
 using Xunit;
-using TheatricalPlayersRefactoringKata.Domain.Entities;
+using TheatricalPlayersRefactoringKata.Domain;
 using TheatricalPlayersRefactoringKata.Services;
 
 namespace TheatricalPlayersRefactoringKata.Tests;

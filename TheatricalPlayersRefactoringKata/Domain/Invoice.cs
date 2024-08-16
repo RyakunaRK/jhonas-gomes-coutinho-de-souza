@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace TheatricalPlayersRefactoringKata.Domain.Entities;
+namespace TheatricalPlayersRefactoringKata.Domain;
 
 public class Invoice
 {
