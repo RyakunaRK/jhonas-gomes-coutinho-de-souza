@@ -22,7 +22,6 @@ public class TragedyCalculatorTest{
         var calculator = new TragedyCalculator();
         var tragedyPlay = new Play("Romeu e Julieta",1000,"tragedy");
         var performance = new Performance("romeu-e-julieta",50);
-        calculator.CalculateVolumeCredits(performance,tragedyPlay);
 
         var credits = calculator.CalculateVolumeCredits(performance,tragedyPlay);
 
