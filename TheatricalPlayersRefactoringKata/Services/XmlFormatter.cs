@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace TheatricalPlayersRefactoringKata.Services;
@@ -25,7 +28,27 @@ public class XmlFormatter : IFormatter
         statementElement.Add(itemsElement);
         statementElement.Add(new XElement("AmountOwed", statementData.TotalAmount));
         statementElement.Add(new XElement("EarnedCredits", statementData.VolumeCredits));
+        XDeclaration declaration = new XDeclaration("1.0","utf-8","yes");
+        XDocument xmlDocument = new XDocument(declaration,statementElement);
+        SaveXmlArchive(xmlDocument,statementData);
 
-        return new XDocument(new XDeclaration("1.0", "utf-8", "yes"), statementElement).ToString();
+        return xmlDocument.ToString();
+    }
+
+    public async Task SaveXmlArchive(XDocument xml, StatementData statementData){
+        string directory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),"Downloads");
+        string nameArchive = statementData.Customer;
+        string filePath = Path.Combine(directory,$"{nameArchive}.xml");
+        
+        try
+        {
+            using (var fileStream = new FileStream(filePath,FileMode.Create,FileAccess.Write,FileShare.None,4096,true)){
+                await xml.SaveAsync(fileStream,SaveOptions.None,default);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error ocurred while saving the file: {ex.Message}");
+        }
     }
 }
