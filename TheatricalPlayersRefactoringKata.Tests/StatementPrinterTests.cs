@@ -1,8 +1,5 @@
-using System;
-using System.IO;
 using System.Collections.Generic;
 using ApprovalTests;
-using System.Xml.Linq;
 using ApprovalTests.Reporters;
 using Xunit;
 using TheatricalPlayersRefactoringKata.Domain;
@@ -31,7 +28,9 @@ public class StatementPrinterTests
             }
         );
 
-        StatementPrinter statementPrinter = new StatementPrinter();
+        var textFormatter = new TextFormatter();
+        var calculatorFactory = new CalculatorFactory();
+        var statementPrinter = new StatementPrinter(textFormatter,calculatorFactory);
         var result = statementPrinter.Print(invoice, plays);
 
         Approvals.Verify(result);
@@ -61,8 +60,10 @@ public class StatementPrinterTests
                 new Performance("henry-v", 20)
             }
         );
-
-        StatementPrinter statementPrinter = new StatementPrinter();
+        
+        var textFormatter = new TextFormatter();
+        var calculatorFactory = new CalculatorFactory();
+        var statementPrinter = new StatementPrinter(textFormatter, calculatorFactory);
         var result = statementPrinter.Print(invoice, plays);
 
         Approvals.Verify(result);
@@ -93,7 +94,9 @@ public class StatementPrinterTests
             }
         );
 
-        StatementPrinter statementPrinter = new StatementPrinter();
+        var XmlFormatter = new XmlFormatter();
+        var calculateFactory = new CalculatorFactory();
+        var statementPrinter = new StatementPrinter(XmlFormatter,calculateFactory);
         string xmlResult = statementPrinter.PrintXml(invoice, plays);
 
 
